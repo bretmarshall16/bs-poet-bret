@@ -1,0 +1,33 @@
+<div class="flex justify-center">
+  <mat-form-field appearance="outline" class="w-1/2">
+    <input
+      type="text"
+      placeholder="Search for author or title"
+      aria-label="Number"
+      matInput
+      [formControl]="myControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onOptionSelected($event)"
+      [displayWith]="displayFn"
+    >
+      @if (((filteredOptions | async) ?? []).length > 0) { @for (option of
+      filteredOptions | async; track option) {
+      <mat-option [value]="option">
+        <div class="flex flex-row just start gap-4">
+          <div class="italic">
+            {{ option.type }}
+          </div>
+          <div>
+            {{ option.value }}
+          </div>
+        </div>
+      </mat-option>
+      } } @else {
+      <mat-option disabled>No options</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
